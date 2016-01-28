@@ -57,7 +57,8 @@ module EcsClaims
     def connection
       @connection ||= Faraday.new(url: url) do |b|
         b.adapter Faraday.default_adapter
-        b.use FaradayMiddleware::ParseJson
+        b.use Faraday::Response::RaiseError
+        b.response :json, content_type: /\bjson$/
       end
     end
   end
